@@ -1,0 +1,169 @@
+/* Responsive base layout */
+html {
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+/* Base paper background with subtle graph/math grid texture */
+body {
+  background-color: #FAF6EE;
+  color: #111317;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  width: 100%;
+  min-width: 320px;
+  background-image: 
+    linear-gradient(to right, rgba(18, 19, 23, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(18, 19, 23, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Fluid typography and word wrapping protection */
+h1, h2, h3, h4, h5, h6, p, span, a, label {
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+/* Selection colors */
+::selection {
+  background-color: #FFE600;
+  color: #111317;
+}
+
+/* Floating Math Symbols Keyframes */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(6deg); }
+}
+@keyframes floatMedium {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-22px) rotate(-8deg); }
+}
+@keyframes floatFast {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-12px) rotate(12deg) scale(1.08); }
+}
+.math-float-1 { animation: floatSlow 7s ease-in-out infinite; }
+.math-float-2 { animation: floatMedium 9s ease-in-out infinite 1s; }
+.math-float-3 { animation: floatFast 6s ease-in-out infinite 2s; }
+.math-float-4 { animation: floatSlow 8s ease-in-out infinite 3.5s; }
+.math-float-5 { animation: floatMedium 10s ease-in-out infinite 0.5s; }
+
+/* Sine wave smooth horizontal flow */
+@keyframes sineFlow {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 400; }
+}
+.animated-sine-wave {
+  stroke-dasharray: 20 8;
+  animation: sineFlow 12s linear infinite;
+}
+
+/* Ticker / Marquee continuous scroll */
+@keyframes marqueeTicker {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeTicker 24s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Tilt effect card styling */
+.tilt-card {
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+@media (hover: hover) and (pointer: fine) {
+  .tilt-card:hover {
+    transform: translateY(-6px) rotate(-0.5deg);
+    box-shadow: 8px 10px 0px #111317;
+  }
+}
+
+/* Wavy underline decoration */
+.wavy-underline {
+  position: relative;
+  display: inline-block;
+}
+.wavy-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 6px;
+  background-repeat: repeat-x;
+  background-size: 16px 6px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 6'%3E%3Cpath d='M0 3 Q 4 0, 8 3 T 16 3' fill='none' stroke='%23FF5416' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Yellow Highlighter highlight */
+.marker-yellow {
+  background: linear-gradient(104deg, rgba(255, 230, 0, 0) 0.9%, rgba(255, 230, 0, 0.85) 2.4%, rgba(255, 230, 0, 0.9) 95%, rgba(255, 230, 0, 0) 98%);
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+/* Scroll reveal transitions */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Touch target accessibility for mobile devices */
+@media (pointer: coarse) {
+  button, a {
+    touch-action: manipulation;
+  }
+}
+
+/* Prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .math-float-1, .math-float-2, .math-float-3, .math-float-4, .math-float-5, .animated-sine-wave {
+    animation: none !important;
+  }
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+  .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF6EE;
+}
+::-webkit-scrollbar-thumb {
+  background: #111317;
+  border: 2px solid #FAF6EE;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF5416;
+}
