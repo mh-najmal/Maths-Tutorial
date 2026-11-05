@@ -560,34 +560,36 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // -----------------------------------------------------------------------
-  // 9. WHATSAPP MESSAGE BUILDER (Dynamic Live Generator)
+  // 9. WHATSAPP MESSAGE BUILDER (Clean Direct Inquiry)
   // -----------------------------------------------------------------------
   const waName = document.getElementById('waName');
-  const waGrade = document.getElementById('waGrade');
-  const waSyllabus = document.getElementById('waSyllabus');
-  const waGoal = document.getElementById('waGoal');
-  const waCustomNote = document.getElementById('waCustomNote');
+  const waMessage = document.getElementById('waMessage') || document.getElementById('waCustomNote');
   const waPreviewText = document.getElementById('waPreviewText');
   const whatsappForm = document.getElementById('whatsappForm');
 
   function generateWhatsAppMessage() {
-    const name = waName.value.trim() || 'Parent/Student';
-    const grade = waGrade.value;
-    const syllabus = waSyllabus.value;
-    const goal = waGoal.value;
-    const note = waCustomNote.value.trim();
+    const name = waName ? waName.value.trim() : '';
+    const message = waMessage ? waMessage.value.trim() : '';
 
-    let msg = `Hi Maths Tutorial! My name is ${name}. I am inquiring about online classes for ${grade} (${syllabus} syllabus). My primary goal is: ${goal}.`;
-    if (note) {
-      msg += ` Additional Note: ${note}`;
+    let formattedMsg = '';
+    if (name && message) {
+      formattedMsg = `Hi Maths Tutorial! My name is ${name}.\n\n${message}\n\nPlease let me know your available slots for a free demo session!`;
+    } else if (name) {
+      formattedMsg = `Hi Maths Tutorial! My name is ${name}. I would like to inquire about 1-on-1 online maths classes and book a free demo session.`;
+    } else if (message) {
+      formattedMsg = `Hi Maths Tutorial!\n\n${message}\n\nPlease let me know your available slots for a free demo session!`;
+    } else {
+      formattedMsg = `Hi Maths Tutorial! I am interested in your online maths tuition. Please share curriculum details and available slots for a free demo session.`;
     }
-    msg += ` Please let me know your available slots for a free demo session!`;
 
-    waPreviewText.textContent = `"${msg}"`;
-    return msg;
+    if (waPreviewText) {
+      waPreviewText.textContent = `"${formattedMsg.replace(/\n+/g, ' ')}"`;
+    }
+
+    return formattedMsg;
   }
 
-  [waName, waGrade, waSyllabus, waGoal, waCustomNote].forEach(el => {
+  [waName, waMessage].forEach(el => {
     if (el) {
       el.addEventListener('input', generateWhatsAppMessage);
       el.addEventListener('change', generateWhatsAppMessage);
